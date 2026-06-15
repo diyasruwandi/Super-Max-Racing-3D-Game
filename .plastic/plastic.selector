@@ -1,0 +1,4 @@
+repository "F1 GAME/F1 GAME@18968091547126@cloud"
+  path "/"
+    br "/main"
+    co "/main"
