@@ -10,6 +10,8 @@ MemoryCaptures/
 
 Assets/AssetStoreTools*
 
+Assets/Austin Track/source/Spielberg.FBX
+
 # Visual Studio
 .vs/
 *.csproj
