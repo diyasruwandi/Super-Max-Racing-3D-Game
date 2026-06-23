@@ -12,7 +12,7 @@ public class mobil : MonoBehaviour
     private Rigidbody rb;
 
     // SETTINGS
-    [SerializeField] private float motorForce = 2000f;
+    [SerializeField] private float motorForce = 3000f;
     [SerializeField] private float brakeForce = 4000f;
     [SerializeField] private float maxSteerAngle = 25f;
     [SerializeField] private float downforce = 100f;
@@ -59,10 +59,23 @@ public class mobil : MonoBehaviour
         // horizontalInput = Input.GetAxis("Horizontal");
         // verticalInput = Input.GetAxis("Vertical");
         // isBraking = Input.GetKey(KeyCode.Space);
-        horizontalInput = joystick.Horizontal;
-        verticalInput = joystick.Vertical;
+        // horizontalInput = joystick.Horizontal;
+        // verticalInput = joystick.Vertical;
 
-        isBraking = false;
+        // isBraking = false;
+         float keyboardH = Input.GetAxis("Horizontal");
+         float keyboardV = Input.GetAxis("Vertical");
+     
+         float joystickH = joystick != null ? joystick.Horizontal : 0f;
+         float joystickV = joystick != null ? joystick.Vertical : 0f;
+     
+         horizontalInput = keyboardH + joystickH;
+         verticalInput = keyboardV + joystickV;
+     
+         horizontalInput = Mathf.Clamp(horizontalInput, -1f, 1f);
+         verticalInput = Mathf.Clamp(verticalInput, -1f, 1f);
+     
+         isBraking = Input.GetKey(KeyCode.Space);
     }
 
     private void HandleMotor()
