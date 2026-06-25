@@ -1,24 +1,27 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class RacePositionManager : MonoBehaviour
 {
     public Transform player;
     public Transform ai;
 
-    public string playerName = "PLAYER";
-    public string aiName = "BOT";
+    public TMP_Text p1Text;
+    public TMP_Text p2Text;
 
-    public TMP_Text positionText;
+    public Image p1DriverImage;
+    public Image p2DriverImage;
 
-    // Parent waypoint
+    public Sprite playerDriverSprite;
+    public Sprite aiDriverSprite;
+
     public Transform waypointParent;
 
     private Transform[] waypoints;
 
     private void Start()
     {
-        // Ambil semua child waypoint otomatis
         waypoints = new Transform[waypointParent.childCount];
 
         for (int i = 0; i < waypointParent.childCount; i++)
@@ -34,15 +37,19 @@ public class RacePositionManager : MonoBehaviour
 
         if (playerWaypoint >= aiWaypoint)
         {
-            positionText.text =
-                "P1 - " + playerName +
-                "\nP2 - " + aiName;
+            p1Text.text = "P1";
+            p2Text.text = "P2";
+
+            p1DriverImage.sprite = playerDriverSprite;
+            p2DriverImage.sprite = aiDriverSprite;
         }
         else
         {
-            positionText.text =
-                "P1 - " + aiName +
-                "\nP2 - " + playerName;
+            p1Text.text = "P1";
+            p2Text.text = "P2";
+
+            p1DriverImage.sprite = aiDriverSprite;
+            p2DriverImage.sprite = playerDriverSprite;
         }
     }
 

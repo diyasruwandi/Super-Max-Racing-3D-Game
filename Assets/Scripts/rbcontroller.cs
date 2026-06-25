@@ -8,6 +8,8 @@ public class mobil : MonoBehaviour
     private float horizontalInput, verticalInput;
     private float currentSteerAngle, currentBrakeForce;
     private bool isBraking;
+    private bool gasButtonPressed = false;
+    private bool brakeButtonPressed = false;
 
     private Rigidbody rb;
 
@@ -67,15 +69,19 @@ public class mobil : MonoBehaviour
          float keyboardV = Input.GetAxis("Vertical");
      
          float joystickH = joystick != null ? joystick.Horizontal : 0f;
-         float joystickV = joystick != null ? joystick.Vertical : 0f;
      
          horizontalInput = keyboardH + joystickH;
-         verticalInput = keyboardV + joystickV;
-     
          horizontalInput = Mathf.Clamp(horizontalInput, -1f, 1f);
-         verticalInput = Mathf.Clamp(verticalInput, -1f, 1f);
+
+             // Gas dari keyboard W/S atau tombol Gas Android
+         verticalInput = keyboardV;
+
+             if (gasButtonPressed)
+                 verticalInput = 1f;
      
-         isBraking = Input.GetKey(KeyCode.Space);
+         isBraking =
+             Input.GetKey(KeyCode.Space) ||
+             brakeButtonPressed;   
     }
 
     private void HandleMotor()
@@ -211,41 +217,23 @@ public class mobil : MonoBehaviour
     }
 }
 
-//     private void HandleSpray()
-// {
-//     float speed = rb.linearVelocity.magnitude;
+    public void GasDown()
+    {
+        gasButtonPressed = true;
+    }
+    
+    public void GasUp()
+    {
+        gasButtonPressed = false;
+    }
 
-//     if (speed > 5f)
-//     {
-//         PlaySpray(rearLeftSpray, speed * 5f);
-//         PlaySpray(rearRightSpray, speed * 5f);
-
-//         // 🔥 depan lebih kecil
-//         PlaySpray(frontLeftSpray, speed * 4f);
-//         PlaySpray(frontRightSpray, speed * 4f);
-//     }
-//     else
-//     {
-//         StopSpray(rearLeftSpray);
-//         StopSpray(rearRightSpray);
-
-//         StopSpray(frontLeftSpray);
-//         StopSpray(frontRightSpray);
-//     }
-// }
-
-// private void PlaySpray(ParticleSystem spray, float rate)
-// {
-//     if (!spray.isPlaying)
-//         spray.Play();
-
-//     var emission = spray.emission;
-//     emission.rateOverTime = rate;
-// }
-
-// private void StopSpray(ParticleSystem spray)
-// {
-//     if (spray.isPlaying)
-//         spray.Stop();
-// }
+    public void BrakeDown()
+    {
+        brakeButtonPressed = true;
+    }
+    
+    public void BrakeUp()
+    {
+        brakeButtonPressed = false;
+    }
 }
